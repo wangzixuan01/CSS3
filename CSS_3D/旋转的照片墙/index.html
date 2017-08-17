@@ -16,7 +16,7 @@
             width: 100%;
             height: 100%;
             background: url(img/bg.jpg);
-            /*position: relative;*/
+            position: relative;
         }
     </style>
 </head>
@@ -24,29 +24,44 @@
 <div id="container"></div>
 <script>
     (function () {
-        var count=0;
-    var ROW=4,COL=6,NUM=ROW*COL;
-    var oContainer=document.getElementById("container");
+    var ROW=4,  COL=6,  NUM=ROW*COL,   BIG_W=750,  BIG_H=500,  THUMB_W=THUMB_H=125;
+    var oContainer = document.getElementById("container");
+    var count = 0;
+//    图片预加载
         for(var i=0;i<NUM;i++){
-        var oBigImg=new Image();
-        oBigImg.onload=function () {
+        var oBigImg = new Image();
+        oBigImg.onload = function () {
             count++;
             if (count==NUM*2){
-                loadSuccess()
+                loadSuccess();
             }
         };
-        oBigImg.src="img/"+ (i+1) +".jpg"
+        oBigImg.src="img/"+ (i+1) +".jpg";
+        var oThumbImg=new Image();
+        oThumbImg.onload=function () {
+            count ++;
+            if(count==NUM*2){
+                loadSuccess();
+            }
+        };
+        oThumbImg.src="img/thumbs/"+(i+1)+".jpg";
         }
+        var index=0;
         function loadSuccess() {
-            for (var i=0;i<COL;i++){
-                for(var j=0;j<ROW;j++){
+//            创建24个div，并给div设置背景图片
+            for (var i=0;i<ROW;i++){
+                for(var j=0;j<COL;j++){
+                    index++;
                 var oDiv=document.createElement("div");
                 oDiv.className="img";
+                oDiv.style.backgroundImage="url(img/thumbs/"+index+".jpg)";
                 oDiv.pos={
-                    col:i,
-                    row:j
+                    col: j,
+                    row: i
                 };
-                oContainer.appendChild("oDiv")
+                oDiv.index=index;
+                oDiv.innerHTML="<span></span>";
+                oContainer.appendChild(oDiv)
             }
         }}
     })()
