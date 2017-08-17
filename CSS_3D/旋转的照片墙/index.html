@@ -18,6 +18,14 @@
             background: url(img/bg.jpg);
             position: relative;
         }
+        .img{
+            width: 125px;
+            height: 125px;
+            border: 5px solid #ffffff;
+            position: absolute;
+            box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -27,6 +35,7 @@
     var ROW=4,  COL=6,  NUM=ROW*COL,   BIG_W=750,  BIG_H=500,  THUMB_W=THUMB_H=125;
     var oContainer = document.getElementById("container");
     var count = 0;
+    var aImg;
 //    图片预加载
         for(var i=0;i<NUM;i++){
         var oBigImg = new Image();
@@ -63,7 +72,13 @@
                 oDiv.innerHTML="<span></span>";
                 oContainer.appendChild(oDiv)
             }
-        }}
+        }
+//        计算每个div的位置
+            aImg=oContainer.getElementsByTagName("div")
+            iImgWidth=aImg[0].offsetWidth;
+            iImgHeight=aImg[0].offsetHeight;
+
+        }
     })()
 </script>
 </body>
