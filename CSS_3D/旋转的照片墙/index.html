@@ -74,10 +74,15 @@
             }
         }
 //        计算每个div的位置
-            aImg=oContainer.getElementsByTagName("div")
+            aImg=oContainer.getElementsByTagName("div");
             iImgWidth=aImg[0].offsetWidth;
             iImgHeight=aImg[0].offsetHeight;
-
+            fGapCol=(oContainer.offsetWidth-iImgWidth*COL)/(COL+1);
+            fGapRow=(oContainer.offsetHeight-iImgHeight*ROW)/(ROW+1);
+            for(var i=0;i<NUM;i++){
+                aImg[i].style.left=(fGapCol+iImgWidth*aImg[i].pos.col)+fGapCol+"px";
+                aImg[i].style.top=(fGapRow+iImgHeight*aImg[i].pos.row)+fGapRow+"px";
+            }
         }
     })()
 </script>
