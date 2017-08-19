@@ -18,6 +18,12 @@
             background: url(img/bg.jpg);
             position: relative;
         }
+        #container .img span{
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: all 1s ease;
+        }
         .img{
             width: 125px;
             height: 125px;
@@ -25,31 +31,66 @@
             position: absolute;
             box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
             cursor: pointer;
+            top: -500px;
+            left: -500px;
+            transition: all 1s ease;
+            cursor: pointer;
+        }
+        #next,#prev{
+            width: 60px;
+            height: 60px;
+            background-color: #fff;
+            background-repeat:no-repeat;
+            background-position:center;
+            position: absolute;
+            top:50%;
+            margin-top: -30px;
+            cursor: pointer;
+        }
+        #next{
+            background-image: url(img/next.png);
+            right:0;
+            border-radius: 8px 0 0 8px;
+            display: none;
+        }
+        #prev{
+            background-image: url(img/prev.png);
+            left: 0px;
+            border-radius: 0px 8px 8px 0;
+            display: none;
         }
     </style>
 </head>
 <body>
 <div id="container"></div>
+<div id="next"></div>
+<div id="prev"></div>
 <script>
     (function () {
-    var ROW=4,  COL=6,  NUM=ROW*COL,   BIG_W=750,  BIG_H=500,  THUMB_W=THUMB_H=125;
+    var ROW=4,  COL=6,  NUM=ROW*COL,   BIG_W=750,  BIG_H=500,  THUMB_W=125, THUMB_H=125;
     var oContainer = document.getElementById("container");
     var count = 0;
     var aImg;
+    var iImgWidth;
+    var iImgHeight;
+    var fGapRow;
+    var fGapCol;
+    var oPrev=document.getElementById("prev");
+    var oNext=document.getElementById("next")
 //    图片预加载
-        for(var i=0;i<NUM;i++){
+        for(var i=0; i<NUM; i++){
         var oBigImg = new Image();
         oBigImg.onload = function () {
             count++;
-            if (count==NUM*2){
+            if (count==NUM * 2){
                 loadSuccess();
             }
         };
-        oBigImg.src="img/"+ (i+1) +".jpg";
+        oBigImg.src="img/"+ (i + 1) +".jpg";
         var oThumbImg=new Image();
         oThumbImg.onload=function () {
             count ++;
-            if(count==NUM*2){
+            if(count==NUM * 2){
                 loadSuccess();
             }
         };
@@ -80,15 +121,80 @@
             fGapCol=(oContainer.offsetWidth-iImgWidth*COL)/(COL+1);
             fGapRow=(oContainer.offsetHeight-iImgHeight*ROW)/(ROW+1);
             for(var i=0;i<NUM;i++){
-                aImg[i].style.left=(fGapCol+iImgWidth*aImg[i].pos.col)+fGapCol+"px";
-                aImg[i].style.top=(fGapRow+iImgHeight*aImg[i].pos.row)+fGapRow+"px";
+                aImg[i].style.left=(fGapCol+iImgWidth)*aImg[i].pos.col+fGapCol+"px";
+                aImg[i].style.top=(fGapRow+iImgHeight)*aImg[i].pos.row+fGapRow+"px";
+                aImg[i].style.transform="rotate("+(Math.random()*40-20)+"deg)"
+                aImg[i].style.transitionDelay=(NUM - i) *  100 +"ms";
             }
         }
-    })()
+//        定义标志位，表示当前是散开还是合并，ture表示散开要合并，flase表示合并要散开
+        var bFlag=true;
+        var fBigGapCol=(oContainer.offsetWidth-BIG_W)/2;
+        var fBigGapRow=(oContainer.offsetHeight-BIG_H)/2;
+//        利用事件委托，把子元素事件委托给container绑定
+        oContainer.onclick=function(e) {
+            if (this!=e.target){
+                if (bFlag){
+                    for(var i=0;i<aImg.length;i++){
+                        aImg[i].style.top=fBigGapRow+THUMB_H*aImg[i].pos.row+"px";
+                        aImg[i].style.left=fBigGapCol+THUMB_W*aImg[i].pos.col+"px";
+                        aImg[i].style.borderWidth="0px";
+                        aImg[i].style.transform="rotate(0deg)";
+                        aImg[i].style.transitionDelay="0ms";
+                        var oSpan=aImg[i].getElementsByTagName("span")[0];
+                        oSpan.style.opacity=1;
+                        if (e.target.className=="img"){
+                            index=e.target.index;
+                        }else{
+                            index=e.target.parentNode.index;
+                        }
+                        oSpan.style.backgroundImage="url(img/"+ index +".jpg)";
+                        oSpan.style.backgroundPosition = -THUMB_W * aImg[i].pos.col + "px "+ (-THUMB_H * aImg[i].pos.row) +"px";
+                    }
+                             oPrev.style.display=oNext.style.display="block";
+                }else{              /*当前是合并的要散开*/
+                    for(var i=0;i<aImg.length;i++){
+                        aImg[i].style.left=(fGapCol+iImgWidth)*aImg[i].pos.col + fGapCol + "px";
+                        aImg[i].style.top=(fGapRow+iImgHeight)*aImg[i].pos.row +fGapRow + "px";
+                        aImg[i].style.transform="rotate(" +(Math.random()*40-20) + "deg)";
+                        aImg[i].style.borderWidth="5px";
+                        var oSpan = aImg[i].getElementsByTagName("span")[0];
+                        oSpan.style.opacity=0;
+                        oSpan.style.transitionDelay= "0ms"
+                    }    oPrev.style.display=oNext.style.display="none";
+                }
+                bFlag=!bFlag;
+            }
+        };
+        oPrev.onclick=oNext.onclick=function () {
+            if(this===oPrev){
+                index--;
+                if(index==0){
+                    index=NUM;
+                }
+            }else{
+                index++;
+                if(index==NUM+1){
+                    index=1;
+                }
+            }
+            var arr=[];
+            for(var i=0;i<NUM;i++){
+                arr.push(i);
+            }
+            arr.sort(function(){
+                return Math.random()-0.5;
+            });
+            for(var i=0;i<aImg.length;i++){
+                var oSpan =aImg[arr[i]].getElementsByTagName("span")[0];
+                oSpan.style.backgroundImage = "url(img/"+ index +".jpg)";
+                oSpan.style.transitionDelay = (i + 2) * 10 + "ms";
+            }
+        };
+    })();
 </script>
 </body>
 </html>
-
 
 
 
