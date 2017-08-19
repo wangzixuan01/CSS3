@@ -78,8 +78,8 @@
             var oH=document.getElementById("h");
             var oM=document.getElementById("m");
             var oS=document.getElementById("s");
-            run()
-            setInterval(run(),1000)
+            run();
+            setInterval(run,1000)
             function run() {
             var now=new Date();
             var nowS=now.getSeconds();
