@@ -1,0 +1,8 @@
+#nav li{
+    float: left;
+}
+#nav .wrapper{
+    height: 120px;
+    overflow: hidden;
+    background: url('../imgs/spirt.jpg') no-repeat ;
+}
