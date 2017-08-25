@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+#wrapper{
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+#nav-bar{
+    float: left;
+    width: 41%;
+    height: 100px;
+}
+#logo img{
+    width: 73px;
+    height: 73px;
+    display: block;
+    margin: 0 auto;
+}
+#signIn{
+    float: right;
+    width: 41%;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#logo{
+    width: 18%;
+    height: 70px;
+    margin: 0 auto;
+    display: block;
+    padding: 15px 0;
+}
+#login{
+    width: 90px;
+    height: 50px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+.munu{
+    width:50px;
+    height: 50px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+.BigAd img{
+    width: 100%;
+    display: block;
+}
+#ad{
+    background: #000000;
+    color: white;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+.BigAd{
+    position: relative;
+}
+#knewMore{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    color: white;
+}
+.container{
+    width: 100%;
+    height: 220px;
+    background: #000000;
+    color: white;
+}
+.warp{
+    width: 77%;
+    margin: 0 auto;
+    background: #000000;
+    height: 220px;
+}
+.rewards-mask p{
+    display: block;
+}
+.rewards-mask{
+    width: 40%;
+    padding: 0 0 0 90px ;
+    position: absolute;
+    margin-top: 80px;
+}
+.rewards-content{
+    width: 60%;
+    position: absolute;
+    margin-top: 78px;
+    right: 0px;
+}
+.rewards-logo{
+    width: 160px;
+    height: 39px;
+    background:url("../imgs/smallImgs/rewardsLogo.JPG") 0 0 no-repeat;
+    background-size: contain
+}
+.form{
+    color: white;
+}
+.app-ad{
+    width: 100%;
+    height: 220px;
+    background: #eaeaea;
+}
+.app-device{
+    width: 200px;
+    height: 300px;
+    background: url("../imgs/smallImgs/app_device.png") 0 0 no-repeat;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
